@@ -65,41 +65,42 @@ export default function App() {
     <>
       <a className="skip-link" href="#main">{t.skip}</a>
 
-      <header className="header wrap">
-        <a className="brand" href="#main" aria-label="Seven Lizards">
-          <img src="assets/logo-transparent.webp" width="640" height="611" alt="" />
-          <span className="brand-caption">
-            Seven Lizards
-            <small>{t.brand}</small>
-          </span>
-        </a>
-        <nav aria-label={language === 'uk' ? 'Навігація' : 'Navigation'}>
-          <a href="#about">{t.navAbout}</a>
-          <a href="#links">{t.navLinks}</a>
-          <a href="#rules">{t.navRules}</a>
-        </nav>
-        <div className="languages" role="group" aria-label="Language / Мова">
-          <button type="button" onClick={() => setLanguage('en')} aria-pressed={language === 'en'}>EN</button>
-          <button type="button" onClick={() => setLanguage('uk')} aria-pressed={language === 'uk'}>UA</button>
-        </div>
-      </header>
-
       <main id="main">
-        <section className="hero wrap" id="about" aria-labelledby="game-title">
+        <section className="hero" id="about" aria-labelledby="game-title">
           <img
             className="hero-bg"
-            src="assets/construction-background.webp"
+            src="assets/hero-city.webp"
             width="1536"
             height="1024"
             alt=""
             aria-hidden="true"
             fetchPriority="high"
           />
-          <div className="hero-copy">
+          <header className="header wrap">
+            <a className="brand" href="#main" aria-label="Seven Lizards">
+              <img
+                src="assets/logo-crest.webp"
+                width="560"
+                height="560"
+                alt=""
+                fetchPriority="high"
+              />
+            </a>
+            <nav aria-label={language === 'uk' ? 'Навігація' : 'Navigation'}>
+              <a href="#about">{t.navAbout}</a>
+              <a href="#links">{t.navLinks}</a>
+              <a href="#rules">{t.navRules}</a>
+            </nav>
+            <div className="languages" role="group" aria-label="Language / Мова">
+              <button type="button" onClick={() => setLanguage('en')} aria-pressed={language === 'en'}>EN</button>
+              <button type="button" onClick={() => setLanguage('uk')} aria-pressed={language === 'uk'}>UA</button>
+            </div>
+          </header>
+          <div className="hero-copy wrap">
             <p className="eyebrow">{t.eyebrow}</p>
             <h1 id="game-title">
-              {t.title1}
-              <span className="accent">{t.title2}</span>
+              <span className="title-line" data-text={t.title1}>{t.title1}</span>
+              <span className="title-line accent" data-text={t.title2}>{t.title2}</span>
             </h1>
             <p className="tagline">{t.tagline}</p>
             <p className="description">{t.description}</p>
@@ -131,9 +132,27 @@ export default function App() {
               </a>
             </div>
           </div>
+          <img
+            className="hero-art"
+            src="assets/scene-builders.webp"
+            width="1000"
+            height="1500"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
         </section>
 
         <section className="panel wrap" id="links" aria-labelledby="links-title">
+          <img
+            className="panel-art blueprints"
+            src="assets/scene-blueprints.webp"
+            width="1100"
+            height="733"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
           <div className="section-heading">
             <div>
               <p className="eyebrow">{t.stay}</p>
@@ -149,6 +168,15 @@ export default function App() {
         </section>
 
         <section className="panel wrap" id="rules" aria-labelledby="rules-title">
+          <img
+            className="panel-art helmet"
+            src="assets/scene-helmet.webp"
+            width="1100"
+            height="733"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
           <div className="rules-inner">
             <div className="rules-copy">
               <p className="eyebrow">{t.before}</p>
@@ -188,6 +216,10 @@ export default function App() {
           </figcaption>
         </figure>
       </main>
+
+      <div className="foundation-band" aria-hidden="true">
+        <img src="assets/band-foundation.webp" width="1920" height="570" alt="" loading="lazy" />
+      </div>
 
       <footer>
         <div className="footer-inner wrap">

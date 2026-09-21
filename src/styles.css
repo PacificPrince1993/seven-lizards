@@ -83,50 +83,40 @@ svg {
 
 /* ---------- header ---------- */
 
+/* The header rides on top of the hero artwork rather than sitting in its own
+   band, so the crest can be large without pushing the title down the page. */
 .header {
   position: relative;
   z-index: 10;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
-  padding: 18px 0 10px;
+  padding: 14px 0 0;
 }
 
+/* The crest already carries the "Seven Lizards" wordmark and strapline, so it
+   stands alone here rather than being paired with repeated text. */
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: block;
   margin-right: auto;
   min-width: 0;
+  transition: transform .2s;
 }
 
+.brand:hover { transform: translateY(-2px); }
+
+/* Oversized crest, as in the reference. It overhangs the header row and the
+   title tucks in beside it, so the extra height costs no vertical space. */
 .brand img {
-  width: 86px;
+  width: clamp(170px, 19vw, 300px);
   height: auto;
   display: block;
-  flex-shrink: 0;
+  filter: drop-shadow(0 6px 16px rgba(80, 55, 20, .22));
 }
 
-.brand-caption {
-  display: flex;
-  flex-direction: column;
-  font-family: Oswald, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: .5px;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.brand-caption small {
-  font-family: Manrope, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .8px;
-  color: var(--muted);
-  margin-top: 4px;
-  text-transform: uppercase;
-}
+/* Nav and switcher sit on the artwork, so they get their own legibility. */
+.header nav,
+.header .languages { margin-top: 14px; }
 
 .header nav {
   display: flex;
@@ -173,41 +163,63 @@ svg {
 
 /* ---------- hero ---------- */
 
+/* The hero art breaks the page gutter: the city illustration frames the title
+   with cranes on both sides, the way the reference does. */
 .hero {
   position: relative;
-  padding: 26px 0 40px;
+  padding: 0 0 46px;
   isolation: isolate;
+  overflow: hidden;
 }
 
+/* Covers the header as well, since the header now lives inside the hero. */
 .hero-bg {
   position: absolute;
-  inset: -120px -40px auto;
-  z-index: -1;
-  height: 760px;
-  width: calc(100% + 80px);
+  inset: 0 0 auto;
+  z-index: -2;
+  height: 100%;
+  min-height: 720px;
+  width: 100%;
   object-fit: cover;
-  object-position: 62% 30%;
+  object-position: 50% 74%;
   pointer-events: none;
   user-select: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 97%);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent 97%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 96%);
+  mask-image: linear-gradient(to bottom, #000 58%, transparent 96%);
 }
 
+/* Builders scene tucked against the right edge, behind the copy column. */
+.hero-art {
+  position: absolute;
+  right: -30px;
+  bottom: -10px;
+  z-index: -1;
+  width: clamp(240px, 30vw, 430px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 8px 18px rgba(70, 45, 15, .18));
+}
+
+/* Pulled up under the header so the title sits beside the crest, not below
+   it — the negative offset is what keeps the overlaid header compact. */
 .hero-copy {
   position: relative;
-  max-width: 560px;
-  padding-top: 18px;
+  max-width: 700px;
+  margin-top: clamp(-96px, -7vw, -30px);
+  /* Clears the crest overhanging from the row above. */
+  padding-left: clamp(0px, 13vw, 200px);
+  padding-top: 0;
 }
 
-/* Soft wash behind the copy: the illustration's left side is pale but not
-   empty, and body text needs a dependable backdrop. */
+/* The sky behind the title is pale but not empty, so body copy gets a soft
+   wash to sit on. */
 .hero-copy::before {
   content: '';
   position: absolute;
-  inset: -26px -34px -20px -30px;
+  inset: -60px -120px -50px -110px;
   z-index: -1;
-  border-radius: 28px;
-  background: radial-gradient(120% 100% at 22% 45%, #f7f2e6f2 58%, #f7f2e600 100%);
+  background: radial-gradient(60% 52% at 40% 46%, #fdf8ecd9 0%, #fdf8ecb0 46%, #fdf8ec00 100%);
 }
 
 .eyebrow {
@@ -230,35 +242,74 @@ svg {
   flex-shrink: 0;
 }
 
+/* Display title.
+   The reference letters are hand-painted brick blocks. No web font ships that,
+   so the depth is built in CSS instead — see .title-line below. */
 h1 {
-  font-family: Oswald, Impact, sans-serif;
+  margin: 0 0 22px;
+  font-family: Oswald, Impact, 'Arial Black', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: clamp(42px, 6.4vw, 78px);
-  line-height: 1.02;
-  letter-spacing: -1px;
-  margin: 0 0 18px;
-  color: #b06a34;
-  text-shadow: 2px 3px 0 #fff6e3, 3px 5px 0 rgba(65, 41, 28, .22);
+  font-size: clamp(46px, 8.2vw, 104px);
+  line-height: .96;
+  letter-spacing: 1px;
 }
 
-h1 .accent { color: var(--brick); display: block; }
+/* Three stacked copies of the same word:
+   the element itself paints the dark keyline + extruded side wall, and ::after
+   paints the brick-gradient face on top of it. The face cannot live on the
+   element's own background, because a text-clipped background paints at the
+   bottom of its stacking context and the extrusion would bury it. */
+.title-line {
+  position: relative;
+  display: block;
+  width: fit-content;
+  color: #8a4420;
+  -webkit-text-stroke: 9px #4a2812;
+  paint-order: stroke fill;
+  text-shadow:
+    1px 1px 0 #7d3c1c, 2px 2px 0 #77391a, 3px 3px 0 #713619,
+    4px 4px 0 #6b3317, 5px 5px 0 #653016, 6px 6px 0 #5f2d14,
+    7px 7px 0 #592a13, 8px 8px 0 #532711, 9px 9px 0 #4d2410,
+    10px 12px 14px rgba(50, 28, 10, .3);
+}
+
+.title-line::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  /* The parent's keyline and extrusion must not repeat on the face layer,
+     or they paint over the gradient and flatten it to solid brown. */
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  background-image: linear-gradient(to bottom, #f0a05a 0%, #d9722f 46%, #c05a24 78%, #a8491d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.title-line.accent::after {
+  background-image: linear-gradient(to bottom, #ffc97a 0%, #f09a3f 46%, #d97a2c 78%, #c06522 100%);
+}
 
 .tagline {
   display: inline-block;
   font-family: Oswald, Arial, sans-serif;
-  font-size: clamp(17px, 2.3vw, 22px);
+  font-size: clamp(17px, 2.3vw, 23px);
   font-weight: 600;
   line-height: 1.4;
   margin: 0 0 18px;
-  padding: 9px 18px;
-  background: #fff7e6e8;
+  padding: 10px 20px;
+  background: #fff9ecf2;
+  border: 1px solid #e8d3ab;
   border-left: 4px solid var(--yellow);
   border-radius: 4px 10px 10px 4px;
+  box-shadow: 0 3px 10px rgba(110, 80, 35, .09);
 }
 
 .description {
   margin: 0 0 22px;
+  max-width: 560px;
   font-size: clamp(15px, 1.7vw, 17px);
   font-weight: 500;
   line-height: 1.75;
@@ -332,6 +383,7 @@ h1 .accent { color: var(--brick); display: block; }
 .panel {
   position: relative;
   z-index: 2;
+  overflow: hidden;
   padding: 28px;
   background: #fffaf0f2;
   border: 1px solid var(--line);
@@ -340,6 +392,33 @@ h1 .accent { color: var(--brick); display: block; }
 }
 
 .panel + .panel { margin-top: 18px; }
+
+/* Faint illustrated corners so the panels read as part of the same world as
+   the hero without competing with the text. */
+.panel-art {
+  position: absolute;
+  z-index: 0;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.panel-art.blueprints {
+  right: -70px;
+  top: -40px;
+  width: 300px;
+  opacity: .2;
+  transform: rotate(-6deg);
+}
+
+.panel-art.helmet {
+  right: -26px;
+  bottom: -46px;
+  width: 340px;
+  opacity: .26;
+}
+
+.panel > *:not(.panel-art) { position: relative; z-index: 1; }
 
 .section-heading {
   display: flex;
@@ -576,10 +655,28 @@ a.resource:hover {
   margin-top: 10px;
 }
 
+/* ---------- foundation band ---------- */
+
+/* Full-bleed strip that sits the page onto a brick foundation before the dark
+   footer. Purely decorative, so it is aria-hidden in the markup. */
+.foundation-band {
+  margin-top: 40px;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.foundation-band img {
+  display: block;
+  width: 100%;
+  min-width: 720px;
+  height: auto;
+  margin-bottom: -2px;
+}
+
 /* ---------- footer ---------- */
 
 footer {
-  margin-top: 34px;
+  margin-top: 0;
   background: var(--ink);
   color: #fff4df;
   border-top: 4px solid #16242c;
@@ -634,8 +731,11 @@ footer {
 }
 
 @media (max-width: 960px) {
-  .hero-bg { object-position: 70% 28%; height: 640px; }
-  .hero-copy { max-width: 100%; }
+  .hero-bg { object-position: 50% 70%; min-height: 620px; }
+  .hero-copy { max-width: 100%; margin-top: -20px; padding-left: 0; }
+  .hero-art { width: 240px; right: -46px; opacity: .85; }
+  .panel-art.blueprints { width: 220px; }
+  .panel-art.helmet { width: 250px; bottom: -30px; }
   .section-heading { display: block; }
   .section-heading > p { text-align: left; max-width: 100%; margin-top: 8px; }
   .game-visual { flex-direction: column; align-items: flex-start; gap: 18px; }
@@ -651,26 +751,43 @@ footer {
 @media (max-width: 640px) {
   :root { --gutter: 16px; --radius: 14px; }
 
-  .header { padding: 14px 0 6px; }
-  .brand img { width: 50px; }
-  .brand-caption { font-size: 16px; }
-  .brand-caption small { font-size: 9px; }
+  .header { padding: 10px 0 0; gap: 10px; align-items: center; }
+  .header .languages { margin-top: 0; }
+  .brand img { width: 132px; }
 
-  .hero { padding: 18px 0 30px; }
-  .hero-bg {
-    inset: -90px -20px auto;
-    width: calc(100% + 40px);
-    height: 560px;
-    object-position: 72% 22%;
-    opacity: .9;
+  .hero { padding: 0 0 26px; }
+  .hero-bg { min-height: 480px; object-position: 50% 72%; }
+  /* No overlap on phones: the crest and the title each get their own row. */
+  .hero-copy { margin-top: 6px; padding-left: 0; }
+  /* The builders sit below the copy on phones rather than behind it, so the
+     one-handed reading column stays completely clear. */
+  .hero-art {
+    position: static;
+    display: block;
+    width: 60%;
+    max-width: 260px;
+    margin: 6px auto -6px;
+    opacity: 1;
   }
-  .hero-copy { padding-top: 6px; }
-  h1 { font-size: clamp(36px, 11vw, 56px); }
+  .hero-copy { padding-top: 4px; }
+  h1 { font-size: clamp(40px, 13vw, 62px); letter-spacing: 0; }
+  .title-line {
+    -webkit-text-stroke-width: 6px;
+    text-shadow:
+      1px 1px 0 #7d3c1c, 2px 2px 0 #77391a, 3px 3px 0 #713619,
+      4px 4px 0 #6b3317, 5px 5px 0 #653016,
+      6px 8px 10px rgba(50, 28, 10, .28);
+  }
   .description {
-    background: #f7f1e4c9;
+    background: #f7f1e4d9;
     padding: 12px 14px;
     border-radius: 12px;
   }
+
+  .panel-art.blueprints { width: 170px; right: -50px; top: -26px; opacity: .14; }
+  .panel-art.helmet { width: 190px; right: -34px; bottom: -22px; opacity: .16; }
+  .foundation-band { margin-top: 26px; }
+  .foundation-band img { min-width: 560px; }
 
   .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
   .hero-actions .button,
