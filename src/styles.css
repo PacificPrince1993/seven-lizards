@@ -133,6 +133,65 @@ svg {
 
 .header nav a:hover { color: var(--orange); border-bottom-color: var(--orange); }
 
+/* Burger: desktop shows the nav inline, so the button only appears at the
+   mobile breakpoint (see the 760px block). */
+.burger {
+  display: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid #d6c1a0;
+  border-radius: 12px;
+  background: #fffaf0d9;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.burger:hover { border-color: #bfa47c; }
+.burger.open { background: var(--ink); border-color: var(--ink); }
+
+.burger-bars {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 16px;
+}
+
+.burger-bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform .28s ease, opacity .18s ease, background .2s;
+}
+
+.burger-bars span:nth-child(1) { top: 0; }
+.burger-bars span:nth-child(2) { top: 50%; margin-top: -1.25px; }
+.burger-bars span:nth-child(3) { bottom: 0; }
+
+/* Top and bottom bars converge into an X, middle bar fades out. */
+.burger.open .burger-bars span { background: #fff8e9; }
+.burger.open .burger-bars span:nth-child(1) { top: 50%; margin-top: -1.25px; transform: rotate(45deg); }
+.burger.open .burger-bars span:nth-child(2) { opacity: 0; transform: scaleX(.4); }
+.burger.open .burger-bars span:nth-child(3) { bottom: 50%; margin-bottom: -1.25px; transform: rotate(-45deg); }
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: rgba(30, 22, 12, .34);
+  animation: menu-fade .2s ease;
+}
+
+@keyframes menu-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .languages {
   display: flex;
   flex-shrink: 0;
@@ -614,7 +673,10 @@ a.resource:hover {
 
 /* ---------- game visual ---------- */
 
+/* Lifted above the foundation band, which rises behind it. */
 .game-visual {
+  position: relative;
+  z-index: 1;
   margin: 18px auto 0;
   padding: 24px 28px;
   display: flex;
@@ -658,11 +720,19 @@ a.resource:hover {
 /* ---------- foundation band ---------- */
 
 /* Full-bleed strip that sits the page onto a brick foundation before the dark
-   footer. Purely decorative, so it is aria-hidden in the markup. */
+   footer. Purely decorative, so it is aria-hidden in the markup.
+
+   The negative offset pulls the bricks up behind the game-visual panel so the
+   product photo rests on the foundation instead of floating above a separate
+   strip. Only empty sky falls in the overlapped region, so no artwork is lost;
+   pointer-events stay off so the panel underneath keeps its links. */
 .foundation-band {
-  margin-top: 40px;
+  position: relative;
+  z-index: 0;
+  margin-top: clamp(-260px, -13vw, -80px);
   line-height: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .foundation-band img {
@@ -743,7 +813,49 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .header nav { display: none; }
+  .burger { display: grid; }
+
+  /* The nav becomes a panel anchored under the header. It stays in the DOM so
+     the open/close transition can run and the links keep their focus order. */
+  .header nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
+    z-index: 9;
+    flex-direction: column;
+    gap: 0;
+    padding: 6px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 16px 34px rgba(70, 48, 20, .22);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(.98);
+    transform-origin: top right;
+    transition: opacity .22s ease, transform .22s ease, visibility .22s;
+  }
+
+  .header nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  .header nav a {
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+    padding: 0 14px;
+    border-bottom: 1px solid #f0e6d2;
+    font-size: 16px;
+  }
+
+  .header nav a:last-child { border-bottom: 0; }
+  .header nav a:hover { color: var(--orange); border-bottom-color: #f0e6d2; }
+  .header nav a:active { background: #f7efdd; border-radius: 11px; }
+
   .rules-inner { display: block; }
   .rules-actions { width: 100%; margin-top: 20px; }
 }
@@ -786,7 +898,7 @@ footer {
 
   .panel-art.blueprints { width: 170px; right: -50px; top: -26px; opacity: .14; }
   .panel-art.helmet { width: 190px; right: -34px; bottom: -22px; opacity: .16; }
-  .foundation-band { margin-top: 26px; }
+  .foundation-band { margin-top: -50px; }
   .foundation-band img { min-width: 560px; }
 
   .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }

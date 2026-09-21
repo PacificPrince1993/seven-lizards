@@ -49,6 +49,8 @@ export default function App() {
     }
   });
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const t = translations[language];
 
   useEffect(() => {
@@ -60,6 +62,22 @@ export default function App() {
       localStorage.setItem(STORAGE_KEY, language);
     } catch {}
   }, [language, t]);
+
+  // While the panel is open the page behind it must not scroll, and Escape
+  // should close it.
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -86,16 +104,37 @@ export default function App() {
                 fetchPriority="high"
               />
             </a>
-            <nav aria-label={language === 'uk' ? 'Навігація' : 'Navigation'}>
-              <a href="#about">{t.navAbout}</a>
-              <a href="#links">{t.navLinks}</a>
-              <a href="#rules">{t.navRules}</a>
+            <nav
+              id="site-nav"
+              className={menuOpen ? 'open' : undefined}
+              aria-label={language === 'uk' ? 'Навігація' : 'Navigation'}
+            >
+              <a href="#about" onClick={() => setMenuOpen(false)}>{t.navAbout}</a>
+              <a href="#links" onClick={() => setMenuOpen(false)}>{t.navLinks}</a>
+              <a href="#rules" onClick={() => setMenuOpen(false)}>{t.navRules}</a>
             </nav>
             <div className="languages" role="group" aria-label="Language / Мова">
               <button type="button" onClick={() => setLanguage('en')} aria-pressed={language === 'en'}>EN</button>
               <button type="button" onClick={() => setLanguage('uk')} aria-pressed={language === 'uk'}>UA</button>
             </div>
+            <button
+              type="button"
+              className={`burger${menuOpen ? ' open' : ''}`}
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="site-nav"
+              aria-label={menuOpen ? t.closeMenu : t.menu}
+            >
+              <span className="burger-bars" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </button>
           </header>
+          {menuOpen && (
+            <div className="menu-backdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" />
+          )}
           <div className="hero-copy wrap">
             <p className="eyebrow">{t.eyebrow}</p>
             <h1 id="game-title">

@@ -12,7 +12,7 @@ assets under `public/assets/`.
 | `6.png` | `scene-builders.webp` | Hero foreground, bottom right (below the copy on phones). |
 | `1.png` | `scene-helmet.webp` | Faint accent in the rules panel. |
 | `2.png` | `scene-blueprints.webp` | Faint accent in the links panel. |
-| `4.png` | `band-foundation.webp` | Full-bleed brick strip between the last section and the footer. |
+| `4.png` | `band-foundation.webp` | Full-bleed brick strip before the footer. It is pulled up behind the game-photo panel, so the panel rests on the foundation. |
 | `3.png` | `logo-crest.png` / `.webp` | Brand crest. PNG is the favicon, the 560px webp is what the header loads. |
 
 Re-run after replacing anything in `art-src/`:
@@ -32,9 +32,10 @@ coverage, restoring the intended edge colour. Fully opaque and fully
 transparent pixels are untouched, so no artwork is redrawn.
 
 **Cropping the foundation strip (`trimTop`).** `4.png` carries about 230px of
-empty sky above the bricks, which would open a visible gap between the last
-section and the footer. The script finds the first row with real coverage and
-crops to it.
+empty sky above the bricks, which would open a visible gap before the footer.
+The script finds the first row with real coverage and crops to it. The crop also
+sets how far the band can be pulled up behind the game-photo panel: the overlap
+is measured from the bricks, not from the empty sky that used to precede them.
 
 ## Product image cleanup
 

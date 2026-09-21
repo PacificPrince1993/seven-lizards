@@ -1,6 +1,6 @@
 export const translations = {
   uk: {
-    skip: 'Перейти до вмісту', brand: 'Видавництво настільних ігор', navAbout: 'Про гру', navLinks: 'Посилання', navRules: 'Правила',
+    skip: 'Перейти до вмісту', brand: 'Видавництво настільних ігор', navAbout: 'Про гру', navLinks: 'Посилання', navRules: 'Правила', menu: 'Меню', closeMenu: 'Закрити меню',
     eyebrow: 'Великі плани. Маленький хаос.', title1: 'Шалене', title2: 'будівництво', tagline: 'Будуй. Плануй. Дивуй суперників.',
     description: 'Місту потрібні нові будівлі. А тобі — трохи стратегії та вдалий план! Збирай матеріали, втілюй креслення й будуй краще за суперників, навіть коли все йде не за планом.',
     players: '2–5 гравців', genre: 'Стратегія та будівництво', learn: 'Як грати', allLinks: 'Усі посилання', edition: 'Твій наступний ігровий вечір', visualNote: 'Плануй сміливо.\nБудуй по-своєму.', gameAlt: 'Коробка та компоненти гри Шалене будівництво',
@@ -9,7 +9,7 @@ export const translations = {
     footerBrand: 'Ігри, що збирають разом.', footerNote: 'Хороший план починається з хорошої компанії.', soon: 'Незабаром', unavailable: 'Посилання ще не додано', youtube: 'Відео та огляди', instagram: 'За лаштунками гри', bgg: 'Оцінки та обговорення', bga: 'Грай онлайн', facebook: 'Наша спільнота', website: 'Більше про видавництво', websiteName: 'Сайт видавництва', pageTitle: 'Шалене будівництво — Seven Lizards'
   },
   en: {
-    skip: 'Skip to content', brand: 'Board game publisher', navAbout: 'About the game', navLinks: 'Explore', navRules: 'Rules',
+    skip: 'Skip to content', brand: 'Board game publisher', navAbout: 'About the game', navLinks: 'Explore', navRules: 'Rules', menu: 'Menu', closeMenu: 'Close menu',
     eyebrow: 'Big plans. A little chaos.', title1: 'Crazy', title2: 'construction', tagline: 'Build. Plan. Surprise your rivals.',
     description: 'The city needs new buildings. You need a little strategy and a clever plan! Collect materials, bring blueprints to life, and outbuild your rivals — even when nothing goes quite as planned.',
     players: '2–5 players', genre: 'Strategy & building', learn: 'How to play', allLinks: 'Explore the links', edition: 'Your next game night', visualNote: 'Dream up a plan.\nBuild it your way.', gameAlt: 'Crazy Construction board game box and components',
