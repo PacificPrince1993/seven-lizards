@@ -13,3 +13,23 @@ Prompt:
 File: `public/assets/game-clean.webp`. Input: `public/assets/game.webp`, extracted from the supplied rules PDF. Tool: built-in `image_gen__imagegen`, one edit. The unwanted rules paragraph above the components was removed. The result is visually similar but not pixel-identical: use an original standalone publisher image for exact product fidelity when available.
 
 Edit brief: remove only the black paragraph/bulleted text in the empty top-left background, replacing it with matching plain beige background. Preserve the game box, exact box artwork/title, components, trucks, cards, board, scale and positions; no redesign.
+
+## Logo background removal
+
+Files: `public/assets/logo-transparent.webp` (used by the page) and
+`public/assets/logo-transparent.png` (favicon + fallback). Input: `Logo.png`.
+Script: `scripts/make-logo-transparent.cjs`, run with `node` and `sharp`.
+
+The supplied logo is a crest on a solid near-black background. It is drawn with
+near-black outlines too, so a colour-tolerance cutout removes the linework along
+with the backdrop and leaves the mascots ragged. The script instead flood-fills
+inward from the image border with a tight tolerance, which keeps the enclosed
+pockets between the mascots, then erodes the resulting mask by a few pixels so
+the black outlines are preserved. No pixels of the artwork itself are redrawn.
+
+Re-run after replacing `Logo.png`:
+
+```sh
+npm install --no-save sharp
+node scripts/make-logo-transparent.cjs
+```
