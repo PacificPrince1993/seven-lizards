@@ -34,6 +34,6 @@ export const gameLinks = {
   instagram: 'https://www.instagram.com/sevenlizardsgames',
   bgg: null,
   bga: null,
-  discord: null,
+  discord: 'https://discord.gg/3khjTeuGNE',
   gamefound: null,
 };
