@@ -241,8 +241,8 @@ export default function App() {
           <div className="game-image">
             <img
               src="assets/game-clean.webp"
-              width="1833"
-              height="858"
+              width="1828"
+              height="883"
               alt={t.gameAlt}
               loading="lazy"
             />
