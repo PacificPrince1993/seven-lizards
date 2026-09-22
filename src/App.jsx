@@ -22,14 +22,10 @@ function ResourceCard({ id, t }) {
   return (
     <Tag className="resource" {...props}>
       <span className={`resource-icon ${id}`} aria-hidden="true">
-        {id === 'facebook' ? (
-          <span className="facebook-glyph"><span>f</span></span>
-        ) : (
-          <span dangerouslySetInnerHTML={{ __html: icons[id] }} />
-        )}
+        <span dangerouslySetInnerHTML={{ __html: icons[id] }} />
       </span>
       <span className="resource-text">
-        <span className="resource-name">{names[id] || t.websiteName}</span>
+        <span className="resource-name">{names[id]}</span>
         <span className="resource-desc">{t[id]}</span>
         {enabled && <span className="sr-only">{t.newTab}</span>}
       </span>
@@ -230,9 +226,11 @@ export default function App() {
                 </svg>
                 <span>{t.download}</span>
               </a>
-              <a className="read-link" href="assets/rules-uk.pdf" target="_blank" rel="noopener noreferrer">
+              <a className="button read-link" href="assets/rules-uk.pdf" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 6v15M3 4c4-1 6 0 9 2 3-2 5-3 9-2v15c-4-1-6 0-9 2-3-2-5-3-9-2V4Z" />
+                </svg>
                 <span>{t.read}</span>
-                <span aria-hidden="true">↗</span>
                 <span className="sr-only">{t.newTab}</span>
               </a>
             </div>

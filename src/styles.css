@@ -589,26 +589,8 @@ a.resource:hover {
 .instagram { color: #d62f7f; }
 .bgg { color: #f2681c; }
 .bga { color: #1a8ce8; }
-.facebook { color: #1477f8; }
-.website { color: #4a8b45; }
-
-.facebook-glyph {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: currentColor;
-  color: #1477f8;
-}
-
-.facebook-glyph span {
-  font-family: Georgia, serif;
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 1;
-  color: #fff;
-}
+.discord { color: #5865f2; }
+.gamefound { color: #e5603d; }
 
 /* ---------- rules ---------- */
 
@@ -656,20 +638,29 @@ a.resource:hover {
 .dark:hover { background: #33454f; transform: translateY(-2px); }
 .dark:active { transform: translateY(1px); box-shadow: 0 1px 0 #101c22; }
 
+/* Reading the rules online matters as much as downloading them, so this gets
+   the same footprint as the download button -- outlined rather than filled, so
+   the pair still reads as a primary and a secondary action. */
 .read-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  color: var(--muted);
+  background: #fffaf0;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 0 3px 0 #d8c3a2;
 }
 
-.read-link:hover { color: var(--ink); }
+.read-link:hover { background: #fff; transform: translateY(-2px); }
+.read-link:active { transform: translateY(1px); box-shadow: 0 1px 0 #d8c3a2; }
+
+.read-link svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 /* ---------- game visual ---------- */
 
