@@ -35,5 +35,7 @@ export const gameLinks = {
   bgg: null,
   bga: null,
   discord: 'https://discord.gg/3khjTeuGNE',
-  gamefound: null,
+  // Placeholder: the platform home page, not the campaign. Swap in the real
+  // project URL as soon as the publisher sends it.
+  gamefound: 'https://gamefound.com',
 };
